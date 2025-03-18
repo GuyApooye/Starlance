@@ -1,5 +1,6 @@
 package net.jcm.vsch.blocks.thruster;
 
+import foundry.veil.api.client.render.VeilRenderSystem;
 import net.jcm.vsch.blocks.custom.template.AbstractThrusterBlock;
 import net.jcm.vsch.blocks.entity.template.ParticleBlockEntity;
 import net.jcm.vsch.ship.thruster.ThrusterData;
@@ -207,7 +208,7 @@ public abstract class AbstractThrusterBlockEntity extends BlockEntity implements
 		// Get blockstate direction, NORTH, SOUTH, UP, DOWN, etc
 		Direction dir = state.getValue(DirectionalBlock.FACING);
 		Vector3d direction = ship.getTransform().getShipToWorldRotation().transform(new Vector3d(dir.getStepX(), dir.getStepY(), dir.getStepZ()));
-
+//		VeilRenderSystem.renderer().getParticleManager().render();
 		spawnParticles(worldPos, direction);
 	}
 

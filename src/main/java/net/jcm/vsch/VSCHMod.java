@@ -1,5 +1,6 @@
 package net.jcm.vsch;
 
+import foundry.veil.api.client.render.VeilRenderSystem;
 import net.jcm.vsch.blocks.VSCHBlocks;
 import net.jcm.vsch.blocks.entity.VSCHBlockEntities;
 import net.jcm.vsch.commands.ModCommands;
@@ -11,6 +12,7 @@ import net.jcm.vsch.config.VSCHConfig;
 import net.jcm.vsch.entity.VSCHEntities;
 import net.jcm.vsch.event.GravityInducer;
 import net.jcm.vsch.items.VSCHItems;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -24,6 +26,7 @@ import org.valkyrienskies.core.impl.hooks.VSEvents;
 @Mod(VSCHMod.MODID)
 public class VSCHMod {
 	public static final String MODID = "vsch";
+	private static final ResourceLocation BLOOM_PIPELINE = new ResourceLocation("vsch", "bloom");
 
 	public VSCHMod() {
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -56,6 +59,8 @@ public class VSCHMod {
 			VSCHPonderRegistry.register();
 			VSCHPonderTags.register();
 		}
+
+//		VeilRenderSystem.renderer().getPostProcessingManager().add(BLOOM_PIPELINE);
 	}
 
 	public void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {

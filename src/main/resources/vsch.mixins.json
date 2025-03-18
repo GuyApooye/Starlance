@@ -12,10 +12,10 @@
     "MixinShipAssemblyKt",
     "MixinSpacesuitwornLogicProcedure",
     "MixinVSGameUtilsKt",
-    "VSPhysicsPipelineStageMixin",
     "accessor.ServerShipObjectWorldAccessor"
   ],
   "client": [
+    "CosmosParticlesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

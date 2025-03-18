@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.jcm.vsch.api.force.IVSCHForceApplier;
 import net.jcm.vsch.ship.dragger.DraggerData;
 import net.jcm.vsch.ship.dragger.DraggerForceApplier;
@@ -13,6 +14,7 @@ import net.jcm.vsch.ship.thruster.ThrusterForceApplier;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.lwjgl.opengl.GL20;
 import org.valkyrienskies.core.api.ships.PhysShip;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.ShipForcesInducer;
@@ -62,7 +64,6 @@ public class VSCHForceInducedShips implements ShipForcesInducer {
 		//Invert the parallel projection of tForce onto linearVelocity and scales it so that the resulting speed is exactly
 		// equal to length of linearVelocity, but still in the direction the ship would have been going without the speed limit
 		Vector3d targetVelocity = (new Vector3d(linearVelocity).add(new Vector3d(tForce).mul(deltaTime / mass)).normalize(maxSpeed)).sub(linearVelocity);
-
 		// Apply the force at no specific position
 		physShip.applyInvariantForce(targetVelocity.mul(mass / deltaTime));
 	}
