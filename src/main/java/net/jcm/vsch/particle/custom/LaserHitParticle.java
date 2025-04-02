@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class LaserHitParticle extends TextureSheetParticle {
 	private static final Random RND = new Random();
-	private static final ResourceLocation BLOOM_BUFFER = new ResourceLocation("vsch", "bloom");
+	private static final ResourceLocation BLOOM_BUFFER = new ResourceLocation("vsch", "bloom_particle");
 	private static final double SPREAD_ANGLE = Math.toRadians(22.5);
 	private static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
 		public void begin(BufferBuilder p_107455_, TextureManager p_107456_) {

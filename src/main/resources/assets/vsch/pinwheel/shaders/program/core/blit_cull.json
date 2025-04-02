@@ -5,6 +5,10 @@
     "MainDepthSampler": {
       "type": "framebuffer",
       "name": "veil:post:depth"
+    },
+    "HandDepthSampler": {
+      "type": "framebuffer",
+      "name": "veil:first_person:depth"
     }
   }
 }

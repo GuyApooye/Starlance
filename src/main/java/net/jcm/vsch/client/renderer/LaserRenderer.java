@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
+import foundry.veil.api.client.render.post.PostPipeline;
+import foundry.veil.api.client.render.post.PostProcessingManager;
 import net.jcm.vsch.particle.custom.LaserHitParticle;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -73,7 +75,7 @@ public class LaserRenderer implements BlockEntityRenderer<BlockEntity> {
 			final Vec3 to = laser.getHitPosition();
 			final LaserProperties props = laser.getLaserProperties();
 			final Vec3 color = props.getColor();
-			final float[] colors = new float[]{(float) (color.x), (float) (color.y), (float) (color.z)};
+			final float[] colors = new float[]{(float) color.x, (float) color.y, (float) color.z};
 			final Vec3 path = to.subtract(from);
 			final float length = (float) (path.length());
 			final Vector3f direction = path.toVector3f().normalize();
@@ -165,7 +167,7 @@ public class LaserRenderer implements BlockEntityRenderer<BlockEntity> {
 			final Vec3 to = laser.getHitPosition();
 			final LaserProperties props = laser.getLaserProperties();
 			final Vec3 color = props.getColor();
-			final float[] colors = new float[]{(float) (color.x), (float) (color.y), (float) (color.z)};
+			final float[] colors = new float[]{(float) color.x, (float) color.y, (float) color.z};
 			final Vec3 path = to.subtract(from);
 			final float length = (float) (path.length());
 			final Vector3f direction = path.toVector3f().normalize();
@@ -239,10 +241,17 @@ public class LaserRenderer implements BlockEntityRenderer<BlockEntity> {
 		float f16 = pHeight * pTextureScale * (0.5F / pBeamRadius) + f15;
 		renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, false)), r, g, b, 1.0F, pYOffset, maxX, 0.0F, pBeamRadius, pBeamRadius, 0.0F, -pBeamRadius, 0.0F, 0.0F, -pBeamRadius, 0.0F, 1.0F, f16, f15);
 		pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, true));
+
+		AdvancedFbo.getMainFramebuffer().bind(true);
+		renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, false)), r, g, b, 1.0F, pYOffset, maxX, 0.0F, pBeamRadius, pBeamRadius, 0.0F, -pBeamRadius, 0.0F, 0.0F, -pBeamRadius, 0.0F, 1.0F, f16, f15);
+		pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, true));
+
 		pPoseStack.popPose();
 		pPoseStack.popPose();
 
-		AdvancedFbo.getMainFramebuffer().bind(true);
+//		PostProcessingManager manager = VeilRenderSystem.renderer().getPostProcessingManager();
+//		PostPipeline bloom = manager.getPipeline(BLOOM_BUFFER);
+//		if (bloom != null) manager.runPipeline(bloom);
 	}
 
 	private static void renderPart(PoseStack pPoseStack, VertexConsumer pConsumer, float pRed, float pGreen, float pBlue, float pAlpha, int pMinY, float pMaxY, float pX0, float pZ0, float pX1, float pZ1, float pX2, float pZ2, float pX3, float pZ3, float pMinU, float pMaxU, float pMinV, float pMaxV) {

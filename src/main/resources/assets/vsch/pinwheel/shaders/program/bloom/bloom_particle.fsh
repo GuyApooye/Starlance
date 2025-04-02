@@ -14,9 +14,9 @@ void main() {
 
     vec4 blurColor = texture(BlurSampler, texCoord);
     vec4 bloomColor = texture(BloomSampler, texCoord);
-//    float depth = max(1.0, texture(DiffuseDepthSampler, texCoord).r);
-    fragColor = texture(DiffuseSampler0, texCoord);
-//    fragColor += bloomColor;
-//    gl_FragDepth = texture(BloomDepthSampler, texCoord).r + texture(DiffuseDepthSampler, texCoord).r * (1 - bloomColor.a);
-    fragColor += 1.5 * blurColor;
+
+    fragColor = texture(DiffuseSampler0, texCoord) * (1 - bloomColor.a);
+
+    fragColor += bloomColor;
+    fragColor += 2.0 * blurColor * 2.5;
 }

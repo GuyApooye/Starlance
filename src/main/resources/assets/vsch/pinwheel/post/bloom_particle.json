@@ -7,111 +7,112 @@
     {
       "type": "veil:blit",
       "shader": "vsch:core/blit_cull",
-      "in": "vsch:bloom",
+      "in": "vsch:bloom_particle",
       "out": "swap",
       "clear": true
     },
     {
       "type": "veil:copy",
       "in": "swap",
-      "out": "layer1"
+      "out": "vsch:bloom_particle"
     },
     {
       "type": "veil:blit",
       "shader": "vsch:blur/blur_horizontal",
-      "in": "layer1",
-      "out": "layer2",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_vertical",
-      "in": "layer2",
+      "in": "swap",
       "out": "layer1",
       "clear": true
     },
     {
       "type": "veil:blit",
-      "shader": "vsch:blur/blur_horizontal",
-      "in": "layer2",
-      "out": "layer3",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
       "shader": "vsch:blur/blur_vertical",
-      "in": "layer3",
-      "out": "layer1",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_horizontal",
-      "in": "layer1",
-      "out": "layer2",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_vertical",
-      "in": "layer3",
-      "out": "layer1",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_horizontal",
-      "in": "layer1",
-      "out": "layer2",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_vertical",
-      "in": "layer2",
-      "out": "layer1",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_horizontal",
-      "in": "layer2",
-      "out": "layer3",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_vertical",
-      "in": "layer3",
-      "out": "layer1",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_horizontal",
-      "in": "layer1",
-      "out": "layer2",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_vertical",
-      "in": "layer3",
-      "out": "layer1",
-      "clear": true
-    },
-    {
-      "type": "veil:blit",
-      "shader": "vsch:blur/blur_horizontal",
       "in": "layer1",
       "out": "swap",
       "clear": true
     },
     {
       "type": "veil:blit",
-      "shader": "vsch:blur/blur_vertical",
+      "shader": "vsch:blur/blur_horizontal",
       "in": "swap",
-      "out": "final"
+      "out": "layer2",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_vertical",
+      "in": "layer2",
+      "out": "swap",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_horizontal",
+      "in": "swap",
+      "out": "layer3",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_vertical",
+      "in": "layer3",
+      "out": "swap",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_horizontal",
+      "in": "swap",
+      "out": "layer1",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_vertical",
+      "in": "layer1",
+      "out": "swap",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_horizontal",
+      "in": "swap",
+      "out": "layer2",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_vertical",
+      "in": "layer2",
+      "out": "swap",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_horizontal",
+      "in": "swap",
+      "out": "layer3",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_vertical",
+      "in": "layer3",
+      "out": "swap",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_horizontal",
+      "in": "swap",
+      "out": "layer1",
+      "clear": true
+    },
+    {
+      "type": "veil:blit",
+      "shader": "vsch:blur/blur_vertical",
+      "in": "layer1",
+      "out": "final",
+      "clear": true
     },
     {
       "type": "veil:mask",
@@ -119,7 +120,7 @@
     },
     {
       "type": "veil:blit",
-      "shader": "vsch:bloom/bloom",
+      "shader": "vsch:bloom/bloom_particle",
       "in": "minecraft:main",
       "out": "swap",
       "clear": true
@@ -129,7 +130,6 @@
       "in": "swap",
       "out": "veil:post"
     }
-
   ],
   "framebuffers": {
     "swap": {

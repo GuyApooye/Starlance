@@ -1,6 +1,13 @@
 package net.jcm.vsch;
 
 import foundry.veil.api.client.render.VeilRenderSystem;
+import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
+import foundry.veil.api.client.render.post.PostPipeline;
+import foundry.veil.api.client.render.post.PostProcessingManager;
+import foundry.veil.api.event.VeilRenderLevelStageEvent;
+import foundry.veil.platform.VeilEventPlatform;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -33,6 +40,7 @@ public class VSCHMod {
 	public static final String MODID = "vsch";
 	public static final String VERSION = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
 	private static final ResourceLocation BLOOM_PIPELINE = new ResourceLocation("vsch", "bloom");
+	private static final ResourceLocation BLOOM_PARTICLE_PIPELINE = new ResourceLocation("vsch", "bloom_particle");
 
 	public VSCHMod() {
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -69,8 +77,26 @@ public class VSCHMod {
 			VSCHPonderRegistry.register();
 			VSCHPonderTags.register();
 		}
-
-		VeilRenderSystem.renderer().getPostProcessingManager().add(BLOOM_PIPELINE);
+		VeilEventPlatform.INSTANCE.onVeilRenderTypeStageRender((stage, levelRenderer, bufferSource, poseStack, matrix4f, i, v, camera, frustum) -> {
+			Minecraft minecraft = Minecraft.getInstance();
+			ClientLevel level = minecraft.level;
+			PostProcessingManager postManager = VeilRenderSystem.renderer().getPostProcessingManager();
+			if (level != null) {
+				if (stage == VeilRenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
+					PostPipeline bloomParticlePipeLine = postManager.getPipeline(BLOOM_PARTICLE_PIPELINE);
+					if (bloomParticlePipeLine != null) postManager.runPipeline(bloomParticlePipeLine);
+					AdvancedFbo bloomParticleFbo = VeilRenderSystem.renderer().getFramebufferManager().getFramebuffer(BLOOM_PARTICLE_PIPELINE);
+					if (bloomParticleFbo != null) {
+						bloomParticleFbo.bind(false);
+						bloomParticleFbo.clear();
+						AdvancedFbo.getMainFramebuffer().bind(true);
+					}
+					PostPipeline bloomPipeLine = postManager.getPipeline(BLOOM_PIPELINE);
+					if (bloomPipeLine != null) postManager.runPipeline(bloomPipeLine);
+				}
+			}
+		});
+//		VeilRenderSystem.renderer().getPostProcessingManager().add(BLOOM_PIPELINE);
 	}
 
 	public void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
