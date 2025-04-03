@@ -2,13 +2,13 @@
   "vertex": "vsch:core/blit_screen",
   "fragment": "vsch:core/blit_cull",
   "textures": {
-    "MainSampler": {
-      "type": "framebuffer",
-      "name": "veil:post"
-    },
     "MainDepthSampler": {
       "type": "framebuffer",
       "name": "veil:post:depth"
+    },
+    "HandDepthSampler": {
+      "type": "framebuffer",
+      "name": "veil:first_person:depth"
     }
   }
 }
