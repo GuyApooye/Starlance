@@ -72,10 +72,6 @@
       "out": "final"
     },
     {
-      "type": "veil:mask",
-      "depth": false
-    },
-    {
       "type": "veil:blit",
       "shader": "vsch:bloom/bloom",
       "in": "minecraft:main",
@@ -83,9 +79,16 @@
       "clear": true
     },
     {
+      "type": "veil:blit",
+      "shader": "vsch:core/blit_depth",
+      "in": "vsch:bloom_particle",
+      "out": "veil:post"
+    },
+    {
       "type": "veil:copy",
       "in": "swap",
-      "out": "veil:post"
+      "out": "veil:post",
+      "depth": false
     }
 
   ],

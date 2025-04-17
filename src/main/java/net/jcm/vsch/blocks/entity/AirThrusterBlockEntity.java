@@ -17,6 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import org.joml.Vector3d;
+import org.joml.Vector3f;
 
 public class AirThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
@@ -41,7 +42,7 @@ public class AirThrusterBlockEntity extends AbstractThrusterBlockEntity {
 	}
 
 	@Override
-	protected void spawnParticles(Vector3d pos, Vector3d direction) {
+	protected void spawnParticles(Vector3d pos, Vector3d direction, Vector3f rotation) {
 		Vector3d speed = new Vector3d(direction).mul(-this.getCurrentPower());
 		speed.mul(0.118);
 

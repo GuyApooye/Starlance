@@ -1,0 +1,6 @@
+{
+  "render_style": "CUBE",
+  "render_modules": [
+    "vsch:color/thruster_red"
+  ]
+}

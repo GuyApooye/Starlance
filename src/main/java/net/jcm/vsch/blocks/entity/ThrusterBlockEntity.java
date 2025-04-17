@@ -1,21 +1,32 @@
 package net.jcm.vsch.blocks.entity;
 
+import foundry.veil.api.client.render.VeilRenderSystem;
+import foundry.veil.api.quasar.particle.ParticleEmitter;
+import foundry.veil.api.quasar.particle.ParticleSystemManager;
+import net.jcm.vsch.VSCHMod;
 import net.jcm.vsch.blocks.thruster.AbstractThrusterBlockEntity;
 import net.jcm.vsch.blocks.thruster.ThrusterEngine;
 import net.jcm.vsch.blocks.thruster.ThrusterEngineContext;
 import net.jcm.vsch.config.VSCHConfig;
 
+import net.jcm.vsch.particles.modules.init.ThrusterInitModule;
+import net.jcm.vsch.particles.modules.update.ThrusterUpdateModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
 
 import java.util.Map;
 
 public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
+
+	private static final ResourceLocation PARTICLE = new ResourceLocation(VSCHMod.MODID, "thruster_red");
 
 	public ThrusterBlockEntity(BlockPos pos, BlockState state) {
 		super("thruster", VSCHBlockEntities.THRUSTER_BLOCK_ENTITY.get(), pos, state,
@@ -68,6 +79,27 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
 			context.addConsumer((ctx) -> {
 				ctx.getFluidHandler().drain(new FluidStack(fluid, (int)(Math.ceil(consumeRate * ctx.getPower()))), IFluidHandler.FluidAction.EXECUTE);
 			});
+		}
+	}
+
+	@Override
+	protected void spawnParticles(Vector3d pos, Vector3d direction, Vector3f rotation) {
+		try {
+
+			Vector3d speed = new Vector3d(direction).mul(-this.getCurrentPower());
+
+			speed.mul(0.6);
+
+			ParticleSystemManager manager = VeilRenderSystem.renderer().getParticleManager();
+			ParticleEmitter emitter = manager.createEmitter(PARTICLE);
+			emitter.setPosition(pos.fma(-0.75, direction, new Vector3d()));
+			emitter.addCodeModule(builder -> {
+				builder.addModule(new ThrusterInitModule(speed, rotation));
+				builder.addModule(new ThrusterUpdateModule());
+			});
+			manager.addParticleSystem(emitter);
+		} catch (Exception e) {
+			super.spawnParticles(pos, direction, rotation);
 		}
 	}
 }

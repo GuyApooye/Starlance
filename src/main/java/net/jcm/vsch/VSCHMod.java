@@ -5,6 +5,7 @@ import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
 import foundry.veil.api.client.render.post.PostPipeline;
 import foundry.veil.api.client.render.post.PostProcessingManager;
 import foundry.veil.api.event.VeilRenderLevelStageEvent;
+import foundry.veil.api.event.VeilRendererEvent;
 import foundry.veil.platform.VeilEventPlatform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -72,15 +73,16 @@ public class VSCHMod {
 			VSCHPonderRegistry.register();
 			VSCHPonderTags.register();
 		}
+		
 		VeilEventPlatform.INSTANCE.onVeilRenderTypeStageRender((stage, levelRenderer, bufferSource, poseStack, matrix4f, i, v, camera, frustum) -> {
 			Minecraft minecraft = Minecraft.getInstance();
 			ClientLevel level = minecraft.level;
 			PostProcessingManager postManager = VeilRenderSystem.renderer().getPostProcessingManager();
 			if (level != null) {
+				AdvancedFbo bloomParticleFbo = VeilRenderSystem.renderer().getFramebufferManager().getFramebuffer(BLOOM_PARTICLE_PIPELINE);
 				if (stage == VeilRenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
 					PostPipeline bloomParticlePipeLine = postManager.getPipeline(BLOOM_PARTICLE_PIPELINE);
 					if (bloomParticlePipeLine != null) postManager.runPipeline(bloomParticlePipeLine);
-					AdvancedFbo bloomParticleFbo = VeilRenderSystem.renderer().getFramebufferManager().getFramebuffer(BLOOM_PARTICLE_PIPELINE);
 					if (bloomParticleFbo != null) {
 						bloomParticleFbo.bind(false);
 						bloomParticleFbo.clear();

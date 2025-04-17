@@ -73,10 +73,6 @@
       "clear": true
     },
     {
-      "type": "veil:mask",
-      "depth": false
-    },
-    {
       "type": "veil:blit",
       "shader": "vsch:bloom/bloom_particle",
       "in": "minecraft:main",
@@ -84,9 +80,16 @@
       "clear": true
     },
     {
+      "type": "veil:blit",
+      "shader": "vsch:core/blit_depth",
+      "in": "vsch:bloom_particle",
+      "out": "veil:post"
+    },
+    {
       "type": "veil:copy",
       "in": "swap",
-      "out": "veil:post"
+      "out": "veil:post",
+      "depth": false
     }
   ],
   "framebuffers": {

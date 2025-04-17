@@ -1,0 +1,11 @@
+{
+  "max_lifetime": 2,
+  "loop": false,
+  "rate": 1,
+  "count": 8,
+  "emitter_settings": {
+    "shape": "vsch:thruster",
+    "particle_settings": "vsch:thruster"
+  },
+  "particle_data": "vsch:thruster_red"
+}

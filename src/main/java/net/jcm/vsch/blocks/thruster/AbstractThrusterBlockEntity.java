@@ -25,6 +25,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
 import org.joml.Vector3d;
+import org.joml.Vector3f;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
@@ -209,10 +210,13 @@ public abstract class AbstractThrusterBlockEntity extends BlockEntity implements
 		Direction dir = state.getValue(DirectionalBlock.FACING);
 		Vector3d direction = ship.getTransform().getShipToWorldRotation().transform(new Vector3d(dir.getStepX(), dir.getStepY(), dir.getStepZ()));
 //		VeilRenderSystem.renderer().getParticleManager().render();
-		spawnParticles(worldPos, direction);
+
+		Vector3d rotation = ship.getTransform().getShipToWorldRotation().getEulerAnglesXYZ(new Vector3d());
+
+		spawnParticles(worldPos, direction, new Vector3f((float) rotation.x, (float) rotation.y, (float) rotation.z));
 	}
 
-	protected void spawnParticles(Vector3d pos, Vector3d direction) {
+	protected void spawnParticles(Vector3d pos, Vector3d direction, Vector3f rotation) {
 		// Offset the XYZ by a little bit so its at the end of the thruster block
 		double x = pos.x - direction.x;
 		double y = pos.y - direction.y;

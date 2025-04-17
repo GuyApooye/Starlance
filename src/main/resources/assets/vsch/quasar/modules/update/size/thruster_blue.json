@@ -1,0 +1,5 @@
+{
+  "module": "tick_size",
+  "size": "q.agePercent >= 0 ? 0.2 * (2 * q.agePercent - 1) : 0"
+}
+
